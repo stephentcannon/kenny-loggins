@@ -1,0 +1,9 @@
+{
+    "name": "kenny-loggins",
+    "description": "a slightly stoopid silly logging tool for meteor",
+    "homepage": "",
+    "author": "Steeve Cannon @ EtherPOS, LLC",
+    "version": "0.0.1",
+    "git": "",
+    "packages": {}
+}
