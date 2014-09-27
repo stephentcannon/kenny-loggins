@@ -1,12 +1,12 @@
 Meteor.publish("loggins", function(options) {
-  console.log('***********[loggins.js] **************');
-  console.log('[loggins.js] options');
-  console.log(options);
-  console.log('[loggins.js] start_date: ');
-  console.log( options.start_date );
-  console.log('[loggins.js] new Date(start_date) works: ' + new Date(options.start_date) );
-  console.log('[loggins.js] end_date: ' + options.end_date );
-  console.log('[loggins.js] new Date(end_date) works: ' + new Date(options.end_date) );
+  // console.log('***********[loggins.js] **************');
+  // console.log('[loggins.js] options');
+  // console.log(options);
+  // console.log('[loggins.js] start_date: ');
+  // console.log( options.start_date );
+  // console.log('[loggins.js] new Date(start_date) works: ' + new Date(options.start_date) );
+  // console.log('[loggins.js] end_date: ' + options.end_date );
+  // console.log('[loggins.js] new Date(end_date) works: ' + new Date(options.end_date) );
   try{
   
     if(options.start_date && options.end_date){
@@ -46,7 +46,20 @@ Loggins.allow({
     }
   },
   update: function () { return false; },
-  remove: function (userId, doc) { return false; }
+  remove: function (userId, doc) {
+    console.log('Loggins.remove')
+    console.log(userId);
+    if(userId){
+      if(Meteor.users.findOne({_id: userId}).admin){
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+    
+  }
 });
 
 Loggins.deny({
@@ -66,18 +79,19 @@ Loggins.deny({
     }
   },
   update: function() {return true; },
-  remove: function() {return true; }
+  // remove: function(userId, doc) {
+  // }
   //fetch: []
 });
 
 Meteor.methods({
-  purgeLoggins: function (params) {
+  enterTheDangerZone: function (params) {
     this.unblock();
     if(this.userId){
-      if(Meteor.users.findOne({_id: this.userId}.admin)){
+      if(Meteor.users.findOne({_id: this.userId}).admin){
         Loggins.validateDates(params.start_date, params.end_date);
         Loggins.remove({
-          created_td: { $gte: new Date(params.start_date), $lte: new Date(params.end_date) }
+          createdAt: { $gte: new Date(params.start_date), $lte: new Date(params.end_date) }
         }, function(error){
           if(error){
             throw error

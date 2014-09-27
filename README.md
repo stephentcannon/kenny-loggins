@@ -53,15 +53,19 @@ myLogger.debug(data);
 
 ````
 
-purge kenny
+enterTheDangerZone
 ===========
+this will purge Kenny of his Loggins!
+
+WARNING, you are in the DANGER ZONE!
 
 ````
-purgeKenny({start_date: Date(), end_date: Date()});
-````
+enterTheDangerZone({start_date: Date(), end_date: Date()});
 
+````
 
 * Requires User.admin = true
+* User.admin = true can also delete from Loggins from Kenny on the client by _id
 
 subscriptions
 ==============
@@ -69,4 +73,3 @@ subscriptions
 ````
 Meteor.subscribe('loggins', {start_date: Date(), end_date:Date(), logSearchParams: {app: String, clientOrServer: [client, server], type: ["success", "info", "warning", "error", "debug"]}});
 ````
-
