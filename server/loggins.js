@@ -8,29 +8,33 @@ Meteor.publish("loggins", function(options) {
   // console.log('[loggins.js] end_date: ' + options.end_date );
   // console.log('[loggins.js] new Date(end_date) works: ' + new Date(options.end_date) );
   try{
-  
-    if(options.start_date && options.end_date){
-      
-      Loggins.validateDates(options.start_date, options.end_date);
-      
-      var query= {};
-      
-      query.createdAt = { $gte: new Date(options.start_date), $lte: new Date(options.end_date) };
+    if(this.userId){
+      if(Meteor.users.findOne({_id: this.userId}).admin){
+        var query= {};
+        
+        if(options.start_date && options.end_date){
+          
+          Loggins.validateDates(options.start_date, options.end_date);
+          
+          query.createdAt = { $gte: new Date(options.start_date), $lte: new Date(options.end_date) };
+          
+        }
+          
     
+        if(options.searchParams){
+          if(options.searchParams.app){
+            query.app = options.searchParams.app;
+          }
+          if(options.searchParams.clientOrServer){
+            query.clientOrServer = options.searchParams.clientOrServer;
+          }
+          if(options.searchParams.type){
+            query.type = options.searchParams.type;
+          }
+        }
       
-      if(options.logSearchParams){
-        if(options.logSearchParams.app){
-          query.app = options.logSearchParams.app;
-        }
-        if(options.logSearchParams.clientOrServer){
-          query.clientOrServer = options.logSearchParams.clientOrServer;
-        }
-        if(options.logSearchParams.type){
-          query.type = options.logSearchParams.type;
-        }
+        return Loggins.find(query);
       }
-      
-      return Loggins.find(query);
     }
   }catch(error){
      //throw new Meteor.Error(600, 'Server error: ' + error);
@@ -47,8 +51,8 @@ Loggins.allow({
   },
   update: function () { return false; },
   remove: function (userId, doc) {
-    console.log('Loggins.remove')
-    console.log(userId);
+    // console.log('Loggins.remove')
+    // console.log(userId);
     if(userId){
       if(Meteor.users.findOne({_id: userId}).admin){
         return true;
@@ -94,7 +98,8 @@ Meteor.methods({
           createdAt: { $gte: new Date(params.start_date), $lte: new Date(params.end_date) }
         }, function(error){
           if(error){
-            throw error
+            console.log(error);
+            throw error;
           }
         });
       }
