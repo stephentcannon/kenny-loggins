@@ -80,15 +80,15 @@ logging messages
 =================
 
 ````
-myLogger.success(data);
+myKenny.success(data);
 
-myLogger.info(data);
+myKenny.info(data);
 
-myLogger.warning(data);
+myKenny.warning(data);
 
-myLogger.error(data);
+myKenny.error(data);
 
-myLogger.debug(data);
+myKenny.debug(data);
 
 ````
 
