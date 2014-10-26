@@ -1,16 +1,22 @@
 Package.describe({
-  summary: "a slightly stoopid silly logging tool for meteor"
+  summary: "a slightly stoopid silly logging tool for meteor",
+  // Version number.
+  version: "0.0.2",
+  // Optional.  Default is package directory name.
+  name: "steeve:kenny-loggins",
+  // Optional github URL to your source repository.
+  git: "https://github.com/stephentcannon/kenny-loggins.git"
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
   
-  api.add_files([
+  api.addFiles([
     'lib/Loggins.js',
     'lib/Kenny.js',
     ],
   ['client', 'server']);
   
-  api.add_files('server/loggins.js', 'server');
+  api.addFiles('server/loggins.js', 'server');
     
   api.export('Loggins', ['client', 'server']);
   
