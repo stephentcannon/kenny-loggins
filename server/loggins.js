@@ -94,9 +94,10 @@ Meteor.methods({
     if(this.userId){
       if(Meteor.users.findOne({_id: this.userId}).admin){
         Loggins.validateDates(params.start_date, params.end_date);
-        Loggins.remove({
+        var query = {
           createdAt: { $gte: new Date(params.start_date), $lte: new Date(params.end_date) }
-        }, function(error){
+        }
+        Loggins.remove(query, function(error){
           if(error){
             console.log(error);
             throw error;
