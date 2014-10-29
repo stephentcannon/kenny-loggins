@@ -1,7 +1,7 @@
 Package.describe({
   summary: "a slightly stoopid silly logging tool for meteor",
   // Version number.
-  version: "0.0.2",
+  version: "0.0.3",
   // Optional.  Default is package directory name.
   name: "steeve:kenny-loggins",
   // Optional github URL to your source repository.
